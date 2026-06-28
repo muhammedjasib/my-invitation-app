@@ -1,0 +1,234 @@
+/* Core Styling Rules */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f3ede2 0%, #dfd5c3 100%);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #333;
+    padding: 20px;
+}
+
+/* Utilities */
+.hidden { display: none !important; }
+
+/* Form Generator Container Box */
+.generator-container {
+    background: #ffffff;
+    max-width: 650px;
+    width: 100%;
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+}
+
+h1 {
+    font-size: 1.8rem;
+    color: #2c2c2c;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.subtitle {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.section-label {
+    display: block;
+    font-weight: 600;
+    color: #8a7355;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    border-left: 4px solid #8a7355;
+    padding-left: 10px;
+    font-size: 1.05rem;
+}
+
+/* Category Grid Display Selection */
+.category-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 12px;
+    margin-bottom: 25px;
+}
+
+.category-card {
+    background: #fdfcf7;
+    border: 2px solid #e9e3d5;
+    padding: 12px 8px;
+    text-align: center;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 500;
+    transition: all 0.25s ease;
+}
+
+.category-card:hover {
+    border-color: #8a7355;
+    background: #faf6ee;
+}
+
+.category-card.active {
+    background: #8a7355;
+    color: #fff;
+    border-color: #8a7355;
+}
+
+/* Form Styles */
+.form-group {
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #dcd3c1;
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.95rem;
+    background-color: #fdfcf9;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #8a7355;
+    background-color: #fff;
+}
+
+/* Shared Button Styles */
+.primary-btn {
+    width: 100%;
+    background: #8a7355;
+    color: white;
+    border: none;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(138, 115, 85, 0.25);
+    margin-top: 10px;
+    transition: all 0.3s;
+}
+
+.primary-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(138, 115, 85, 0.35);
+}
+
+/* Output Share Box Container styles */
+#result-box {
+    margin-top: 30px;
+    background: #f7f5ef;
+    padding: 20px;
+    border-radius: 12px;
+    border: 1px dashed #8a7355;
+}
+
+.copy-container {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 12px;
+}
+
+#generated-url {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+#copy-btn {
+    background: #333;
+    color: #fff;
+    border: none;
+    padding: 0 18px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.preview-link {
+    display: block;
+    text-align: center;
+    color: #8a7355;
+    font-weight: 600;
+    text-decoration: none;
+    font-size: 0.95rem;
+}
+
+/* INVITATION SPECIFIC STYLES (CLIENT CARD) */
+.envelope {
+    background: #fff;
+    padding: 50px 30px;
+    border-radius: 15px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06);
+    text-align: center;
+    max-width: 450px;
+    width: 100%;
+}
+
+.badge {
+    background: #f4efe4;
+    color: #8a7355;
+    padding: 4px 12px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    border-radius: 20px;
+    letter-spacing: 2px;
+}
+
+.envelope h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.2rem;
+    margin: 15px 0;
+    color: #8a7355;
+}
+
+#invitation-card {
+    width: 100%;
+    max-width: 500px;
+    background: #fff;
+    padding: 50px 35px;
+    border-radius: 20px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.08);
+    text-align: center;
+    border: 8px double #e6dfd3;
+    animation: fadeInUp 1s ease forwards;
+}
+
+.sub-title { font-size: 0.75rem; letter-spacing: 3px; color: #888; display: block; margin-bottom: 10px; }
+.main-title { font-family: 'Playfair Display', serif; font-size: 2.3rem; color: #8a7355; line-height: 1.2; }
+.divider { color: #8a7355; margin: 15px 0; font-size: 1.2rem; }
+.details p { margin: 10px 0; font-size: 1rem; font-weight: 500; }
+.personal-note { font-style: italic; font-family: 'Playfair Display', serif; color: #666; margin-top: 25px; line-height: 1.6; }
+
+/* Floating Audio Widgets buttons */
+#music-control { position: fixed; top: 20px; right: 20px; z-index: 100; }
+.music-btn { background: rgba(255, 255, 255, 0.9); border: 1px solid #dcd3c1; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-weight: 600; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>You are Cordially Invited</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Dynamic Audio Player -->
+    <audio id="bg-music" loop></audio>
+
+    <!-- Floating Play Control -->
+    <div id="music-control" class="hidden">
+        <button id="music-toggle" class="music-btn">🎵 Pause</button>
+    </div>
+
+    <!-- Step 1: Elegant Sealed Envelope Cover Screen -->
+    <div id="envelope-container">
+        <div class="envelope">
+            <div class="envelope-content">
+                <span id="badge-category" class="badge">WEDDING INVITATION</span>
+                <h2 id="envelope-heading">A Special Invitation</h2>
+                <p>You have received a private digital invitation link.</p>
+                <button id="open-btn" class="primary-btn">Tap to Open ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Step 2: Main Revealed Invitation Card -->
+    <div id="invitation-card" class="hidden">
+        <div class="card-content">
+            <span class="sub-title">YOU ARE CORDIALLY INVITED TO THE</span>
+            <h1 id="live-title" class="main-title">Event Title</h1>
+            
+            <div class="divider">♦</div>
+            
+            <div class="details">
+                <p id="live-date" class="date">📅 Date loading...</p>
+                <p id="live-venue" class="venue">📍 Venue loading...</p>
+            </div>
+            
+            <p id="live-message" class="personal-note">"Personal message goes here..."</p>
+            
+            <button class="primary-btn" onclick="alert('RSVP confirmed!')">RSVP Now</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Extract URL Parameters dynamically
+            const params = new URLSearchParams(window.location.search);
+            
+            const title = params.get('title') || "Special Celebration";
+            const date = params.get('date') || "Date to be Announced";
+            const venue = params.get('venue') || "Venue Location Details";
+            const musicUrl = params.get('music') || "";
+            const msg = params.get('msg') || "We joyfully invite you to join us on this special occasion.";
+            const cat = params.get('cat') || "Celebration";
+
+            // 2. Insert extracted parameters into elements
+            document.getElementById('live-title').textContent = title;
+            document.getElementById('live-date').textContent = "📅 " + date;
+            document.getElementById('live-venue').textContent = "📍 " + venue;
+            document.getElementById('live-message').textContent = `"${msg}"`;
+            document.getElementById('badge-category').textContent = `${cat.toUpperCase()} INVITATION`;
+
+            const bgMusic = document.getElementById("bg-music");
+            if (musicUrl) {
+                bgMusic.src = musicUrl;
+            }
+
+            // 3. Setup Button Event Handlers for UI changes
+            const openBtn = document.getElementById("open-btn");
+            const envelopeContainer = document.getElementById("envelope-container");
+            const invitationCard = document.getElementById("invitation-card");
+            const musicControl = document.getElementById("music-control");
+            const musicToggle = document.getElementById("music-toggle");
+
+            openBtn.addEventListener("click", () => {
+                envelopeContainer.classList.add("hidden");
+                invitationCard.classList.remove("hidden");
+                
+                if (musicUrl) {
+                    musicControl.classList.remove("hidden");
+                    bgMusic.play().catch(e => console.log("Audio play blocked by browser config", e));
+                }
+            });
+
+            musicToggle.addEventListener("click", () => {
+                if (bgMusic.paused) {
+                    bgMusic.play();
+                    musicToggle.textContent = "🎵 Pause";
+                } else {
+                    bgMusic.pause();
+                    musicToggle.textContent = "🔇 Play Music";
+                }
+            });
+        });
+    </script>
+</body>
+</html>
