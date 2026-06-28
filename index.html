@@ -132,7 +132,6 @@ function showGeneratedLink(link) {
             // Construct link pointing to invitation.html loaded with query parameters
             const basePath = window.location.href.replace('index.html', '') + 'invitation.html';
             const finalLink = `${basePath}?title=${title}&date=${date}&venue=${venue}&music=${music}&msg=${message}&cat=${category}`;
-
             // Show generated link box
             document.getElementById('generated-url').value = finalLink;
             document.getElementById('preview-btn').href = finalLink;
