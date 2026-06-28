@@ -2,6 +2,8 @@
 let selectedTemplate = "elegant";
 let selectedCategory = "Wedding";
 let selectedColor = "gold";
+let selectedMusicFile = null;
+let musicBase64 = null;
 
 // ==================== TEMPLATE SELECTION ====================
 document.querySelectorAll(".template-card").forEach((card) => {
@@ -24,6 +26,23 @@ document.querySelectorAll(".category-card").forEach((card) => {
 // ==================== COLOR SELECTION ====================
 document.getElementById("event-color").addEventListener("change", (e) => {
     selectedColor = e.target.value;
+});
+
+// ==================== MUSIC FILE UPLOAD ====================
+document.getElementById("event-music").addEventListener("change", (e) => {
+    const file = e.target.files[0];
+    if (file) {
+        selectedMusicFile = file;
+        document.getElementById("music-file-name").textContent = `✓ Selected: ${file.name} (${(file.size / 1024 / 1024).toFixed(2)}MB)`;
+        document.getElementById("music-file-name").classList.remove("hidden");
+
+        // Convert file to Base64
+        const reader = new FileReader();
+        reader.onload = (event) => {
+            musicBase64 = event.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
 });
 
 // ==================== FORM SUBMISSION ====================
@@ -53,7 +72,13 @@ document.getElementById("invite-form").addEventListener("submit", (e) => {
 
     // Build the invitation URL
     const basePath = window.location.href.replace("index.html", "") + "invitation.html";
-    const invitationUrl = `${basePath}?title=${title}&date=${date}&venue=${venue}&msg=${message}&cat=${selectedCategory}&template=${selectedTemplate}&color=${selectedColor}`;
+    let invitationUrl = `${basePath}?title=${title}&date=${date}&venue=${venue}&msg=${message}&cat=${selectedCategory}&template=${selectedTemplate}&color=${selectedColor}`;
+
+    // Add music if selected
+    if (musicBase64) {
+        const musicEncoded = encodeURIComponent(musicBase64);
+        invitationUrl += `&music=${musicEncoded}`;
+    }
 
     // Display result
     displayGeneratedLink(invitationUrl);
@@ -89,11 +114,14 @@ document.getElementById("copy-btn").addEventListener("click", () => {
 document.getElementById("new-invite-btn").addEventListener("click", () => {
     document.getElementById("invite-form").reset();
     document.getElementById("result-box").classList.add("hidden");
+    document.getElementById("music-file-name").classList.add("hidden");
 
     // Reset selections
     selectedTemplate = "elegant";
     selectedCategory = "Wedding";
     selectedColor = "gold";
+    selectedMusicFile = null;
+    musicBase64 = null;
 
     document.querySelector(".template-card.active").classList.remove("active");
     document.querySelector('.template-card[data-template="elegant"]').classList.add("active");
