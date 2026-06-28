@@ -91,7 +91,41 @@
             const title = encodeURIComponent(document.getElementById('event-title').value);
             const date = encodeURIComponent(document.getElementById('event-date').value);
             const venue = encodeURIComponent(document.getElementById('event-venue').value);
-            const music = encodeURIComponent(document.getElementById('event-music').value);
+            document.getElementById('generate-btn').addEventListener('click', () => {
+    const title = encodeURIComponent(document.getElementById('event-title').value);
+    const date = encodeURIComponent(document.getElementById('event-date').value);
+    const venue = encodeURIComponent(document.getElementById('event-venue').value);
+    const msg = encodeURIComponent(document.getElementById('event-msg').value);
+    const cat = encodeURIComponent(document.querySelector('.category-box.active')?.dataset.category || 'Celebration');
+
+    const fileInput = document.getElementById('event-music-file');
+    
+    let baseUrl = "https://muhammedjasib.github.io/my-invitation-app/invitation.html";
+    let finalQuery = `?title=${title}&date=${date}&venue=${venue}&msg=${msg}&cat=${cat}`;
+
+    if (fileInput.files.length > 0) {
+        const file = fileInput.files[0];
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+            // This converts your phone's audio file into data text for the link
+            const audioData = encodeURIComponent(e.target.result);
+            const fullLink = baseUrl + finalQuery + `&music=${audioData}`;
+            showGeneratedLink(fullLink);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        // Defaults to your saved song if you don't choose a file
+        const fullLink = baseUrl + finalQuery + `&music=song.mp3`;
+        showGeneratedLink(fullLink);
+    }
+});
+
+function showGeneratedLink(link) {
+    document.getElementById('generated-link-output').value = link;
+    document.getElementById('output-container').style.display = 'block';
+}
+
             const message = encodeURIComponent(document.getElementById('event-message').value);
             const category = encodeURIComponent(selectedCategory);
 
