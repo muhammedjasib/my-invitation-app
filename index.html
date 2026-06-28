@@ -128,7 +128,7 @@ function showGeneratedLink(link) {
 
             const message = encodeURIComponent(document.getElementById('event-message').value);
             const category = encodeURIComponent(selectedCategory);
-
+            const music = "song.mp3";
             // Construct link pointing to invitation.html loaded with query parameters
             const basePath = window.location.href.replace('index.html', '') + 'invitation.html';
             const finalLink = `${basePath}?title=${title}&date=${date}&venue=${venue}&music=${music}&msg=${message}&cat=${category}`;
