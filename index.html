@@ -5,147 +5,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Invitation Generator</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="generator-container">
-        <h1>✨ Custom Invitation Maker</h1>
-        <p class="subtitle">Fill out the details below to generate a unique shareable link for your clients.</p>
-
-        <!-- Step 1: Category Grid Selection -->
-        <label class="section-label">1. Select Occasion Category</label>
-        <div class="category-grid">
-            <div class="category-card active" data-category="Wedding">💍 Wedding</div>
-            <div class="category-card" data-category="Birthday">🎂 Birthday</div>
-            <div class="category-card" data-category="Anniversary">🥂 Anniversary</div>
-            <div class="category-card" data-category="Baby Shower">🍼 Baby Shower</div>
-            <div class="category-card" data-category="House Warming">🏡 House Warming</div>
-            <div class="category-card" data-category="Gala Party">🎉 Gala Party</div>
-            <div class="category-card" data-category="Inauguration">🏢 Inauguration</div>
-            <div class="category-card" data-category="Music Concert">🎵 Music Event</div>
-            <div class="category-card" data-category="Farewell">🎓 Graduation/Farewell</div>
-            <div class="category-card" data-category="Festival">🌟 Festival Celebration</div>
+    <!-- Navigation Header -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">✨ InviteLux</div>
+            <ul class="nav-links">
+                <li><a href="#generator">Create</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#templates">Templates</a></li>
+            </ul>
         </div>
+    </nav>
 
-        <!-- Step 2: Information Inputs -->
-        <label class="section-label">2. Enter Event Details</label>
-        <form id="invite-form">
-            <div class="form-group">
-                <label>Event Title / Host Names</label>
-                <input type="text" id="event-title" placeholder="e.g., Shadiya & Badusha" required>
-            </div>
-
-            <div class="form-group">
-                <label>Date & Time</label>
-                <input type="text" id="event-date" placeholder="e.g., Saturday, Oct 10, 2026 at 6:00 PM" required>
-            </div>
-
-            <div class="form-group">
-                <label>Venue Address</label>
-                <input type="text" id="event-venue" placeholder="e.g., The Grand Quartz Ballroom, NY" required>
-            </div>
-
-            <div class="form-group">
-                <label>Background Music URL (.mp3 direct link or hosted file)</label>
-                <input type="file" id="event-music-file" accept="audio/mp3, audio/*">
-<input type="hidden" id="event-music">
-                
-            </div>
-
-            <div class="form-group">
-                <label>Personal Message / Description</label>
-                <textarea id="event-message" rows="3" placeholder="Join us to celebrate this beautiful milestone..."></textarea>
-            </div>
-
-            <button type="submit" class="primary-btn">Generate Invitation Link 🚀</button>
-        </form>
-
-        <!-- Step 3: Shareable Result Link Box -->
-        <div id="result-box" class="hidden">
-            <label class="section-label">🎉 Your Client's Invitation Link is Ready!</label>
-            <div class="copy-container">
-                <input type="text" id="generated-url" readonly>
-                <button id="copy-btn">Copy Link</button>
-            </div>
-            <a id="preview-btn" href="#" target="_blank" class="preview-link">Open Live Preview ↗</a>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Create Beautiful Digital Invitations</h1>
+            <p>Craft elegant, personalized invitations that wow your guests in seconds</p>
+            <a href="#generator" class="cta-btn">Start Creating Now →</a>
         </div>
-    </div>
+    </section>
 
-    <script>
-        // Managing category active selection state
-        let selectedCategory = "Wedding";
-        const cards = document.querySelectorAll('.category-card');
-        cards.forEach(card => {
-            card.addEventListener('click', () => {
-                cards.forEach(c => c.classList.remove('active'));
-                card.classList.add('active');
-                selectedCategory = card.getAttribute('data-category');
-            });
-        });
-
-        // Form Submission Logic
-        document.getElementById('invite-form').addEventListener('submit', (e) => {
-            e.preventDefault();
+    <!-- Main Generator Section -->
+    <section id="generator" class="generator-section">
+        <div class="generator-wrapper">
+            <h2>Design Your Invitation</h2>
             
-            // Collect all custom inputs
-            const title = encodeURIComponent(document.getElementById('event-title').value);
-            const date = encodeURIComponent(document.getElementById('event-date').value);
-            const venue = encodeURIComponent(document.getElementById('event-venue').value);
-            document.getElementById('generate-btn').addEventListener('click', () => {
-    const title = encodeURIComponent(document.getElementById('event-title').value);
-    const date = encodeURIComponent(document.getElementById('event-date').value);
-    const venue = encodeURIComponent(document.getElementById('event-venue').value);
-    const msg = encodeURIComponent(document.getElementById('event-msg').value);
-    const cat = encodeURIComponent(document.querySelector('.category-box.active')?.dataset.category || 'Celebration');
+            <!-- Step 1: Template Selection -->
+            <div class="form-section">
+                <h3 class="section-title">🎨 Choose a Template</h3>
+                <div class="template-grid">
+                    <div class="template-card active" data-template="elegant">
+                        <div class="template-preview">💍</div>
+                        <p>Elegant</p>
+                    </div>
+                    <div class="template-card" data-template="modern">
+                        <div class="template-preview">🎉</div>
+                        <p>Modern</p>
+                    </div>
+                    <div class="template-card" data-template="vintage">
+                        <div class="template-preview">🥂</div>
+                        <p>Vintage</p>
+                    </div>
+                    <div class="template-card" data-template="colorful">
+                        <div class="template-preview">🌈</div>
+                        <p>Colorful</p>
+                    </div>
+                </div>
+            </div>
 
-    const fileInput = document.getElementById('event-music-file');
-    
-    let baseUrl = "https://muhammedjasib.github.io/my-invitation-app/invitation.html";
-    let finalQuery = `?title=${title}&date=${date}&venue=${venue}&msg=${msg}&cat=${cat}`;
+            <!-- Step 2: Event Category -->
+            <div class="form-section">
+                <h3 class="section-title">📋 Select Event Type</h3>
+                <div class="category-grid">
+                    <div class="category-card active" data-category="Wedding">💍 Wedding</div>
+                    <div class="category-card" data-category="Birthday">🎂 Birthday</div>
+                    <div class="category-card" data-category="Anniversary">🥂 Anniversary</div>
+                    <div class="category-card" data-category="Baby Shower">🍼 Baby Shower</div>
+                    <div class="category-card" data-category="House Warming">🏡 House Warming</div>
+                    <div class="category-card" data-category="Gala Party">🎉 Gala Party</div>
+                    <div class="category-card" data-category="Graduation">🎓 Graduation</div>
+                    <div class="category-card" data-category="Concert">🎵 Concert</div>
+                </div>
+            </div>
 
-    if (fileInput.files.length > 0) {
-        const file = fileInput.files[0];
-        const reader = new FileReader();
-        
-        reader.onload = function(e) {
-            // This converts your phone's audio file into data text for the link
-            const audioData = encodeURIComponent(e.target.result);
-            const fullLink = baseUrl + finalQuery + `&music=${audioData}`;
-            showGeneratedLink(fullLink);
-        };
-        reader.readAsDataURL(file);
-    } else {
-        // Defaults to your saved song if you don't choose a file
-        const fullLink = baseUrl + finalQuery + `&music=song.mp3`;
-        showGeneratedLink(fullLink);
-    }
-});
+            <!-- Step 3: Event Details Form -->
+            <div class="form-section">
+                <h3 class="section-title">📝 Enter Event Details</h3>
+                <form id="invite-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-title">Event Title / Hosts</label>
+                            <input type="text" id="event-title" placeholder="e.g., Sarah & Michael" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-date">Date & Time</label>
+                            <input type="text" id="event-date" placeholder="e.g., Saturday, July 15, 2025 at 6:00 PM" required>
+                        </div>
+                    </div>
 
-function showGeneratedLink(link) {
-    document.getElementById('generated-link-output').value = link;
-    document.getElementById('output-container').style.display = 'block';
-}
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="event-venue">Venue Address</label>
+                            <input type="text" id="event-venue" placeholder="e.g., The Grand Ballroom, New York, NY" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="event-color">Color Theme</label>
+                            <select id="event-color">
+                                <option value="gold">Gold & Cream</option>
+                                <option value="blue">Navy Blue</option>
+                                <option value="rose">Rose Gold</option>
+                                <option value="emerald">Emerald Green</option>
+                                <option value="purple">Purple Elegance</option>
+                            </select>
+                        </div>
+                    </div>
 
-            const message = encodeURIComponent(document.getElementById('event-message').value);
-            const category = encodeURIComponent(selectedCategory);
-            const music = "song.mp3";
-            // Construct link pointing to invitation.html loaded with query parameters
-            const basePath = window.location.href.replace('index.html', '') + 'invitation.html';
-            const finalLink = `${basePath}?title=${title}&date=${date}&venue=${venue}&music=${music}&msg=${message}&cat=${category}`;
-            // Show generated link box
-            document.getElementById('generated-url').value = finalLink;
-            document.getElementById('preview-btn').href = finalLink;
-            document.getElementById('result-box').classList.remove('hidden');
-            document.getElementById('result-box').scrollIntoView({ behavior: 'smooth' });
-        });
+                    <div class="form-group full-width">
+                        <label for="event-message">Personal Message</label>
+                        <textarea id="event-message" rows="4" placeholder="Share a special message with your guests..."></textarea>
+                    </div>
 
-        // Copy Button Utility
-        document.getElementById('copy-btn').addEventListener('click', () => {
-            const urlInput = document.getElementById('generated-url');
-            urlInput.select();
-            document.execCommand('copy');
-            alert('Link copied to clipboard! You can now send this link directly to your client.');
-        });
-    </script>
+                    <button type="submit" class="primary-btn">Generate Invitation Link 🚀</button>
+                </form>
+            </div>
+
+            <!-- Step 4: Result Box -->
+            <div id="result-box" class="result-section hidden">
+                <div class="result-content">
+                    <h3>🎉 Your Invitation is Ready!</h3>
+                    <p>Share this link with your guests:</p>
+                    
+                    <div class="copy-container">
+                        <input type="text" id="generated-url" readonly>
+                        <button id="copy-btn" class="copy-btn">📋 Copy</button>
+                    </div>
+
+                    <div class="action-buttons">
+                        <a id="preview-btn" href="#" target="_blank" class="preview-btn">👁️ Preview Invitation</a>
+                        <button id="new-invite-btn" class="new-btn">+ Create Another</button>
+                    </div>
+
+                    <div class="share-section">
+                        <p>Share directly:</p>
+                        <div class="share-buttons">
+                            <button class="share-btn whatsapp-btn">WhatsApp</button>
+                            <button class="share-btn email-btn">Email</button>
+                            <button class="share-btn sms-btn">SMS</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <h2>Why Choose InviteLux?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h4>Lightning Fast</h4>
+                <p>Create beautiful invitations in seconds, not hours</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🎨</div>
+                <h4>Fully Customizable</h4>
+                <p>Choose colors, templates, and personalize every detail</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h4>Mobile Friendly</h4>
+                <p>Perfect display on any device - phones, tablets, desktops</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔗</div>
+                <h4>Easy Sharing</h4>
+                <p>One link to share via WhatsApp, Email, or SMS</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h4>Professional Design</h4>
+                <p>Premium templates that impress your guests</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h4>RSVP Ready</h4>
+                <p>Built-in confirmation button for guest responses</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2025 InviteLux. Create unforgettable invitations.</p>
+    </footer>
+
+    <script src="script.js"></script>
 </body>
 </html>

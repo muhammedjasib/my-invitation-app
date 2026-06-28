@@ -3,102 +3,162 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>You are Cordially Invited</title>
+    <title>You Are Cordially Invited</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..700;1,400..700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 </head>
-<body>
-
-    <!-- Dynamic Audio Player -->
+<body class="invitation-page">
+    <!-- Audio Element -->
     <audio id="bg-music" loop></audio>
 
-    <!-- Floating Play Control -->
+    <!-- Music Control -->
     <div id="music-control" class="hidden">
-        <button id="music-toggle" class="music-btn">🎵 Pause</button>
+        <button id="music-toggle" class="music-btn">🎵 Pause Music</button>
     </div>
 
-    <!-- Step 1: Elegant Sealed Envelope Cover Screen -->
+    <!-- Envelope (Initial Screen) -->
     <div id="envelope-container">
         <div class="envelope">
             <div class="envelope-content">
                 <span id="badge-category" class="badge">WEDDING INVITATION</span>
-                <h2 id="envelope-heading">A Special Invitation</h2>
-                <p>You have received a private digital invitation link.</p>
+                <h2 id="envelope-heading">You Are Invited</h2>
+                <p>You have received a special digital invitation</p>
                 <button id="open-btn" class="primary-btn">Tap to Open ✨</button>
             </div>
         </div>
     </div>
 
-    <!-- Step 2: Main Revealed Invitation Card -->
+    <!-- Invitation Card (Hidden by default) -->
     <div id="invitation-card" class="hidden">
         <div class="card-content">
-            <span class="sub-title">YOU ARE CORDIALLY INVITED TO THE</span>
+            <span class="sub-title">You are cordially invited to</span>
             <h1 id="live-title" class="main-title">Event Title</h1>
-            
+
             <div class="divider">♦</div>
-            
+
             <div class="details">
-                <p id="live-date" class="date">📅 Date loading...</p>
-                <p id="live-venue" class="venue">📍 Venue loading...</p>
+                <p id="live-date">📅 Date</p>
+                <p id="live-venue">📍 Venue</p>
             </div>
-            
-            <p id="live-message" class="personal-note">"Personal message goes here..."</p>
-            
-            <button class="primary-btn" onclick="alert('RSVP confirmed!')">RSVP Now</button>
+
+            <p id="live-message" class="personal-note">"Personal message"</p>
+
+            <button class="primary-btn" onclick="handleRSVP()">RSVP Now</button>
         </div>
     </div>
 
     <script>
+        // ==================== URL PARAMETER EXTRACTION ====================
         document.addEventListener("DOMContentLoaded", () => {
-            // 1. Extract URL Parameters dynamically
             const params = new URLSearchParams(window.location.search);
-            
-            const title = params.get('title') || "Special Celebration";
-            const date = params.get('date') || "Date to be Announced";
-            const venue = params.get('venue') || "Venue Location Details";
-            const musicUrl = params.get('music') || "song.mp3";
-            const msg = params.get('msg') || "We joyfully invite you to join us on this special occasion.";
-            const cat = params.get('cat') || "Celebration";
 
-            // 2. Insert extracted parameters into elements
-            document.getElementById('live-title').textContent = title;
-            document.getElementById('live-date').textContent = "📅 " + date;
-            document.getElementById('live-venue').textContent = "📍 " + venue;
-            document.getElementById('live-message').textContent = `"${msg}"`;
-            document.getElementById('badge-category').textContent = `${cat.toUpperCase()} INVITATION`;
+            // Get parameters with defaults
+            const title = params.get("title") || "Special Celebration";
+            const date = params.get("date") || "Date to be Announced";
+            const venue = params.get("venue") || "Venue Location Details";
+            const message =
+                params.get("msg") ||
+                "We joyfully invite you to join us on this special occasion.";
+            const category = params.get("cat") || "Celebration";
+            const template = params.get("template") || "elegant";
+            const color = params.get("color") || "gold";
 
-            const bgMusic = document.getElementById("bg-music");
+            // ==================== UPDATE DOM WITH PARAMETERS ====================
+            document.getElementById("live-title").textContent = decodeURIComponent(
+                title
+            );
+            document.getElementById("live-date").textContent =
+                "📅 " + decodeURIComponent(date);
+            document.getElementById("live-venue").textContent =
+                "📍 " + decodeURIComponent(venue);
+            document.getElementById("live-message").textContent =
+                '"' + decodeURIComponent(message) + '"';
+            document.getElementById("badge-category").textContent =
+                decodeURIComponent(category).toUpperCase() + " INVITATION";
+            document.getElementById("envelope-heading").textContent =
+                "You Are Invited to " + decodeURIComponent(category);
+
+            // ==================== APPLY COLOR THEME ====================
+            applyColorTheme(color);
+
+            // ==================== MUSIC HANDLING ====================
+            const musicUrl = params.get("music");
             if (musicUrl) {
+                const bgMusic = document.getElementById("bg-music");
                 bgMusic.src = musicUrl;
+
+                // Auto-show music control after opening invitation
+                const openBtn = document.getElementById("open-btn");
+                openBtn.addEventListener("click", () => {
+                    document.getElementById("music-control").classList.remove("hidden");
+                });
             }
 
-            // 3. Setup Button Event Handlers for UI changes
+            // ==================== BUTTON EVENT LISTENERS ====================
             const openBtn = document.getElementById("open-btn");
             const envelopeContainer = document.getElementById("envelope-container");
             const invitationCard = document.getElementById("invitation-card");
-            const musicControl = document.getElementById("music-control");
+            const bgMusic = document.getElementById("bg-music");
             const musicToggle = document.getElementById("music-toggle");
 
             openBtn.addEventListener("click", () => {
                 envelopeContainer.classList.add("hidden");
                 invitationCard.classList.remove("hidden");
-                
-                if (musicUrl) {
-                    musicControl.classList.remove("hidden");
-                    bgMusic.play().catch(e => console.log("Audio play blocked by browser config", e));
+
+                if (bgMusic.src) {
+                    bgMusic.play().catch((e) => {
+                        console.log("Audio playback blocked by browser policy", e);
+                    });
                 }
             });
 
             musicToggle.addEventListener("click", () => {
                 if (bgMusic.paused) {
                     bgMusic.play();
-                    musicToggle.textContent = "🎵 Pause";
+                    musicToggle.textContent = "🎵 Pause Music";
                 } else {
                     bgMusic.pause();
-                    musicToggle.textContent = "🔇 Play Music";
+                    musicToggle.textContent = "🔊 Play Music";
                 }
             });
         });
+
+        // ==================== RSVP HANDLER ====================
+        function handleRSVP() {
+            alert(
+                "Thank you for your RSVP! We look forward to celebrating with you! 🎉"
+            );
+        }
+
+        // ==================== COLOR THEME APPLICATION ====================
+        function applyColorTheme(color) {
+            const root = document.documentElement;
+            const themes = {
+                gold: { primary: "#d4a574", accent: "#8a7355" },
+                blue: { primary: "#2c3e5f", accent: "#1a253a" },
+                rose: { primary: "#d4838e", accent: "#a85f70" },
+                emerald: { primary: "#5a9f7c", accent: "#3d6d56" },
+                purple: { primary: "#8b6fa3", accent: "#6b4f7f" },
+            };
+
+            const theme = themes[color] || themes.gold;
+
+            root.style.setProperty("--primary-color", theme.primary);
+            root.style.setProperty("--accent-color", theme.accent);
+
+            // Apply to specific elements
+            const badgeElements = document.querySelectorAll(".badge");
+            const mainTitle = document.querySelector(".main-title");
+            const divider = document.querySelector(".divider");
+
+            badgeElements.forEach((el) => {
+                el.style.color = theme.primary;
+                el.style.backgroundColor = `${theme.primary}15`;
+            });
+
+            if (mainTitle) mainTitle.style.color = theme.primary;
+            if (divider) divider.style.color = theme.primary;
+        }
     </script>
 </body>
 </html>
