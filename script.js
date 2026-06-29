@@ -74,10 +74,18 @@ document.getElementById("invite-form").addEventListener("submit", (e) => {
     const basePath = window.location.href.replace("index.html", "") + "invitation.html";
     let invitationUrl = `${basePath}?title=${title}&date=${date}&venue=${venue}&msg=${message}&cat=${selectedCategory}&template=${selectedTemplate}&color=${selectedColor}`;
 
-    // Add music if selected
+    // Add music if selected - Store in sessionStorage for long URLs
     if (musicBase64) {
-        const musicEncoded = encodeURIComponent(musicBase64);
-        invitationUrl += `&music=${musicEncoded}`;
+        // Store music in sessionStorage with a unique key
+        const musicKey = "music_" + Date.now();
+        try {
+            sessionStorage.setItem(musicKey, musicBase64);
+            invitationUrl += `&musicKey=${musicKey}`;
+        } catch (e) {
+            console.warn("SessionStorage full or unavailable", e);
+            alert("Music file is too large. Please try a smaller file (under 5MB).");
+            return;
+        }
     }
 
     // Display result
@@ -108,6 +116,14 @@ document.getElementById("copy-btn").addEventListener("click", () => {
     setTimeout(() => {
         btn.textContent = originalText;
     }, 2000);
+});
+
+// ==================== PREVIEW BUTTON ====================
+document.getElementById("preview-btn").addEventListener("click", (e) => {
+    e.preventDefault();
+    const url = document.getElementById("generated-url").value;
+    // Open preview in the same window
+    window.location.href = url;
 });
 
 // ==================== CREATE NEW INVITATION ====================

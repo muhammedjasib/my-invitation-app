@@ -11,7 +11,7 @@
     <!-- Audio Element -->
     <audio id="bg-music" loop></audio>
 
-    <!-- Music Control -->
+    <!-- Music Control (Always visible if music exists) -->
     <div id="music-control" class="hidden">
         <button id="music-toggle" class="music-btn">🎵 Pause Music</button>
     </div>
@@ -62,6 +62,7 @@
             const category = params.get("cat") || "Celebration";
             const template = params.get("template") || "elegant";
             const color = params.get("color") || "gold";
+            const musicKey = params.get("musicKey");
 
             // ==================== UPDATE DOM WITH PARAMETERS ====================
             document.getElementById("live-title").textContent = decodeURIComponent(
@@ -81,16 +82,61 @@
             // ==================== APPLY COLOR THEME ====================
             applyColorTheme(color);
 
-            // ==================== MUSIC HANDLING ====================
-            const musicUrl = params.get("music");
-            if (musicUrl) {
-                const bgMusic = document.getElementById("bg-music");
-                bgMusic.src = musicUrl;
+            // ==================== SETUP MUSIC ====================
+            const bgMusic = document.getElementById("bg-music");
+            const musicControl = document.getElementById("music-control");
+            const musicToggle = document.getElementById("music-toggle");
 
-                // Auto-show music control after opening invitation
-                const openBtn = document.getElementById("open-btn");
-                openBtn.addEventListener("click", () => {
-                    document.getElementById("music-control").classList.remove("hidden");
+            let musicUrl = null;
+            if (musicKey) {
+                // Get music from sessionStorage
+                musicUrl = sessionStorage.getItem(musicKey);
+            }
+
+            if (musicUrl) {
+                // Set music source
+                bgMusic.src = musicUrl;
+                // Show music control immediately
+                musicControl.classList.remove("hidden");
+
+                // Auto-play music when page loads (with user interaction fallback)
+                let autoPlayAttempted = false;
+                const autoPlayMusic = () => {
+                    if (!autoPlayAttempted) {
+                        autoPlayAttempted = true;
+                        bgMusic
+                            .play()
+                            .catch((e) => {
+                                console.log(
+                                    "Auto-play blocked. User needs to interact first.",
+                                    e
+                                );
+                                // Add a small hint to user
+                                musicToggle.textContent = "🔊 Play Music (Click to Start)";
+                            });
+                    }
+                };
+
+                // Try auto-play immediately
+                autoPlayMusic();
+
+                // Also try after user interacts with the page (envelope click)
+                document.addEventListener(
+                    "click",
+                    autoPlayMusic,
+                    { once: true }
+                );
+
+                // Music toggle button
+                musicToggle.addEventListener("click", (e) => {
+                    e.stopPropagation();
+                    if (bgMusic.paused) {
+                        bgMusic.play();
+                        musicToggle.textContent = "🎵 Pause Music";
+                    } else {
+                        bgMusic.pause();
+                        musicToggle.textContent = "🔊 Play Music";
+                    }
                 });
             }
 
@@ -98,27 +144,16 @@
             const openBtn = document.getElementById("open-btn");
             const envelopeContainer = document.getElementById("envelope-container");
             const invitationCard = document.getElementById("invitation-card");
-            const bgMusic = document.getElementById("bg-music");
-            const musicToggle = document.getElementById("music-toggle");
 
             openBtn.addEventListener("click", () => {
                 envelopeContainer.classList.add("hidden");
                 invitationCard.classList.remove("hidden");
 
-                if (bgMusic.src) {
+                // Try to play music if it's not already playing
+                if (bgMusic.src && bgMusic.paused) {
                     bgMusic.play().catch((e) => {
                         console.log("Audio playback blocked by browser policy", e);
                     });
-                }
-            });
-
-            musicToggle.addEventListener("click", () => {
-                if (bgMusic.paused) {
-                    bgMusic.play();
-                    musicToggle.textContent = "🎵 Pause Music";
-                } else {
-                    bgMusic.pause();
-                    musicToggle.textContent = "🔊 Play Music";
                 }
             });
         });
