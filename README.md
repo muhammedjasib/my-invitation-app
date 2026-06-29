@@ -53,7 +53,7 @@ my-invitation-app/
 - Extracts URL parameters dynamically
 - Displays an elegant sealed envelope
 - Guest taps to open and see full invitation
-- Optional background music support
+- background music support
 - Customizable RSVP button
 
 ### 3. Sharing
