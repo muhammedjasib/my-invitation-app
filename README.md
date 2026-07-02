@@ -42,271 +42,212 @@ A complete production-ready AI-powered Wedding Invitation Builder web applicatio
 - Google Maps API
 - Google Analytics
 
+## Quick Start
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/muhammedjasib/my-invitation-app.git
+   cd my-invitation-app
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Setup Firebase**
+   - Create a Firebase project at https://console.firebase.google.com
+   - Copy Firebase config to `config/firebase-config.js`
+   - Enable Authentication (Email/Password)
+   - Create Firestore database
+   - Setup Storage buckets
+
+4. **Run locally**
+   ```bash
+   firebase serve
+   ```
+
+5. **Deploy to Firebase Hosting**
+   ```bash
+   firebase deploy
+   ```
+
 ## Project Structure
 
 ```
 my-invitation-app/
-├── admin/
-│   ├── login.html
+├── admin/                    # Admin panel pages
 │   ├── dashboard.html
 │   ├── create-invitation.html
 │   ├── invitations.html
 │   ├── rsvp.html
 │   ├── wishes.html
 │   └── settings.html
-├── invitation/
-│   ├── index.html
-│   └── [code].html (dynamic)
-├── assets/
+├── invitation/              # Guest invitation pages
+│   └── [code].html
+├── assets/                  # Static resources
 │   ├── css/
-│   │   ├── admin.css
-│   │   ├── invitation.css
-│   │   ├── themes.css
-│   │   └── responsive.css
 │   ├── js/
-│   │   ├── main.js
-│   │   ├── admin.js
-│   │   ├── invitation.js
-│   │   ├── ai-service.js
-│   │   ├── storage.js
-│   │   └── analytics.js
 │   ├── components/
-│   │   ├── navbar.js
-│   │   ├── sidebar.js
-│   │   ├── footer.js
-│   │   └── forms.js
 │   ├── firebase/
-│   │   ├── config.js
-│   │   ├── auth.js
-│   │   ├── firestore.js
-│   │   └── storage.js
-│   ├── images/
-│   │   ├── logos/
-│   │   ├── themes/
-│   │   └── icons/
-├── public/
+│   └── images/
+├── public/                  # PWA assets
 │   ├── manifest.json
 │   ├── service-worker.js
 │   └── robots.txt
-├── config/
-│   ├── firebase-config.example.js
-│   ├── firestore-rules.txt
-│   └── storage-rules.txt
-├── docs/
-│   ├── DEPLOYMENT.md
-│   ├── FIREBASE-SETUP.md
-│   ├── API-SETUP.md
-│   └── USER-GUIDE.md
-├── index.html
+├── config/                  # Configuration files
+├── docs/                    # Documentation
+├── index.html              # Login page
 ├── package.json
 └── firebase.json
 ```
 
-## Installation
+## Admin Credentials
 
-### 1. Clone Repository
-```bash
-git clone https://github.com/muhammedjasib/my-invitation-app.git
-cd my-invitation-app
-```
-
-### 2. Install Dependencies
-```bash
-npm install
-```
-
-### 3. Setup Firebase
-
-1. Create a Firebase project at https://console.firebase.google.com
-2. Copy your Firebase config
-3. Create `config/firebase-config.js` from the example
-4. Enable Authentication (Email/Password)
-5. Create Firestore database
-6. Setup Storage buckets
-7. Deploy Firestore and Storage rules
-
-See [FIREBASE-SETUP.md](docs/FIREBASE-SETUP.md) for detailed instructions.
-
-### 4. Setup OpenAI API
-
-1. Get API key from https://platform.openai.com/api-keys
-2. Add to environment variables in Firebase
-
-See [API-SETUP.md](docs/API-SETUP.md) for detailed instructions.
-
-### 5. Run Locally
-```bash
-firebase serve
-```
-
-## Deployment
-
-### Firebase Hosting
-```bash
-firebase deploy
-```
-
-See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment guide.
+Default credentials (change after first login):
+- Email: admin@wedding.app
+- Password: Wedding@Admin123
 
 ## Database Schema
 
 ### Collections
 
-**users**
+**users** - Admin user accounts
 ```
-- uid (string)
-- email (string)
-- displayName (string)
-- createdAt (timestamp)
-- subscription (string)
-```
-
-**invitations**
-```
-- id (string - auto-generated)
-- code (string - 10 char unique code)
-- userId (string)
-- clientName (string)
-- brideName (string)
-- groomName (string)
-- weddingDate (timestamp)
-- venue (object)
-- theme (object)
-- status (string)
-- viewCount (number)
-- uniqueVisitors (number)
-- rsvpCount (number)
-- wishesCount (number)
-- createdAt (timestamp)
-- updatedAt (timestamp)
+- uid
+- email
+- displayName
+- createdAt
+- subscription
 ```
 
-**rsvp**
+**invitations** - Wedding invitations
 ```
-- id (string)
-- invitationId (string)
-- name (string)
-- phone (string)
-- guestCount (number)
-- attending (boolean)
-- mealPreference (string)
-- message (string)
-- createdAt (timestamp)
-```
-
-**wishes**
-```
-- id (string)
-- invitationId (string)
-- name (string)
-- message (string)
-- approved (boolean)
-- createdAt (timestamp)
+- id
+- code (10-char unique code)
+- userId
+- clientName
+- brideName
+- groomName
+- weddingDate
+- venue
+- theme
+- status
+- analytics
 ```
 
-**analytics**
+**rsvp** - Guest responses
 ```
-- id (string)
-- invitationId (string)
-- event (string)
-- device (string)
-- country (string)
-- timestamp (timestamp)
-```
-
-## Environment Variables
-
-Create `.env.local`:
-
-```
-VITE_FIREBASE_API_KEY=your_key
-VITE_FIREBASE_AUTH_DOMAIN=your_domain
-VITE_FIREBASE_PROJECT_ID=your_project
-VITE_FIREBASE_STORAGE_BUCKET=your_bucket
-VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
-VITE_FIREBASE_APP_ID=your_app_id
-VITE_OPENAI_API_KEY=your_openai_key
-VITE_GOOGLE_MAPS_API_KEY=your_maps_key
-VITE_GOOGLE_ANALYTICS_ID=your_analytics_id
+- id
+- invitationId
+- name
+- phone
+- guestCount
+- attending
+- mealPreference
+- message
 ```
 
-## Admin Credentials
+**wishes** - Guest wishes/messages
+```
+- id
+- invitationId
+- name
+- message
+- approved
+```
 
-Default admin credentials (change after first login):
-- Email: admin@wedding.app
-- Password: Wedding@Admin123
+**analytics** - Event tracking
+```
+- id
+- invitationId
+- event
+- device
+- country
+- timestamp
+```
 
-## Features Detail
+## Features in Detail
 
 ### Admin Dashboard
-- 📊 Real-time statistics cards
-- 📈 RSVP and invitations charts
-- 🎯 Quick action buttons
-- 📋 Invitation management table
-- 🔍 Search and filter
+- Real-time invitation statistics
+- RSVP tracking and analytics
+- Guest management
+- Wish moderation
+- Quick action buttons
 
-### Invitation Creation
-- AI-powered form assistance
-- Rich media uploads
+### Create Invitation Form
+- Bride & Groom details
+- Wedding date & venue
+- Photo uploads (gallery, cover image)
 - Theme selection
+- AI-powered suggestions
 - SEO optimization
-- Preview before publishing
+- RSVP & guest settings
 
-### Guest Experience
+### Guest Invitation Page
 - Luxury premium design
 - Wedding countdown timer
 - Photo gallery with lightbox
+- Love story timeline
+- Event schedule
+- Family members display
 - RSVP form
 - Guest wishes wall
-- Location map
-- Background music
+- Google Maps
+- Music player
 - Animated elements
 
 ### AI Features
-- Quote generation
-- Love story creation
-- SEO optimization
-- Color palette suggestion
-- Event schedule generation
-- Welcome message creation
+- Wedding quote generator
+- Love story creator
+- Event schedule generator
+- SEO description generator
+- Color palette suggester
+- Invitation description generator
 
-## Security
+## Security Features
 
 - Firebase Authentication
 - Firestore Security Rules
-- Input validation
-- Rate limiting
+- Input validation & sanitization
 - XSS protection
 - CSRF protection
-- Secure API endpoints
+- Rate limiting
+- Secure file uploads
 
-## Performance
+## Performance Optimizations
 
 - Lazy loading
-- Image compression
-- Service Worker
+- Image optimization
+- Service Worker caching
 - PWA support
-- Caching strategies
 - Minified assets
+- CDN delivery
 
 ## Browser Support
 
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers
+- Chrome/Edge (latest 2 versions)
+- Firefox (latest 2 versions)
+- Safari (latest 2 versions)
+- Mobile browsers (iOS Safari, Chrome Mobile)
+
+## Documentation
+
+- [Firebase Setup Guide](docs/FIREBASE-SETUP.md)
+- [API Integration Guide](docs/API-SETUP.md)
+- [Deployment Guide](docs/DEPLOYMENT.md)
+- [User Guide](docs/USER-GUIDE.md)
 
 ## License
 
-MIT License - See LICENSE file
+MIT License - See LICENSE file for details
 
 ## Support
 
-For issues and feature requests, visit: https://github.com/muhammedjasib/my-invitation-app/issues
-
-## Contributing
-
-Contributions are welcome! Please read our contributing guidelines.
+For issues and questions:
+- GitHub Issues: https://github.com/muhammedjasib/my-invitation-app/issues
+- Email: support@wedding-app.com
 
 ---
 

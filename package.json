@@ -5,22 +5,23 @@
   "main": "index.js",
   "scripts": {
     "start": "firebase serve",
+    "dev": "firebase serve --only hosting",
     "build": "npm run build:css && npm run build:js",
     "build:css": "echo 'CSS build process'",
     "build:js": "echo 'JS build process'",
     "deploy": "firebase deploy",
     "deploy:hosting": "firebase deploy --only hosting",
-    "deploy:functions": "firebase deploy --only functions",
     "deploy:firestore": "firebase deploy --only firestore:rules",
     "deploy:storage": "firebase deploy --only storage",
-    "dev": "firebase serve --only hosting"
+    "test": "echo 'Tests would run here'"
   },
   "keywords": [
     "wedding",
     "invitation",
     "ai",
     "firebase",
-    "pwa"
+    "pwa",
+    "builder"
   ],
   "author": "Your Name",
   "license": "MIT",
