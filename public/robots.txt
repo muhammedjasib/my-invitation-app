@@ -1,0 +1,26 @@
+# Robots.txt for Wedding Invitation Builder
+# Controls search engine crawling
+
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /config/
+Disallow: /private/
+Disallow: /.env*
+Disallow: /node_modules/
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+
+# Crawl delay
+Crawl-delay: 1
+Request-rate: 30/60
+
+# Sitemaps
+Sitemap: https://yourdomain.com/sitemap.xml

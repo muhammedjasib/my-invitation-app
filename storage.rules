@@ -1,0 +1,49 @@
+# Firebase Storage Security Rules
+# Defines access control for file uploads
+
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Helper function
+    function isAuthenticated() {
+      return request.auth.uid != null;
+    }
+
+    function isOwner(userId) {
+      return request.auth.uid == userId;
+    }
+
+    function validImageFile() {
+      return request.resource.contentType.matches('image/.*') &&
+             request.resource.size < 5 * 1024 * 1024; // 5MB max
+    }
+
+    function validAudioFile() {
+      return request.resource.contentType.matches('audio/.*') &&
+             request.resource.size < 20 * 1024 * 1024; // 20MB max
+    }
+
+    // Invitations folder - User can only manage their own files
+    match /invitations/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && validImageFile();
+    }
+
+    // Music folder - User can only manage their own files
+    match /music/{userId}/{allPaths=**} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId) && validAudioFile();
+    }
+
+    // Public folder - Read-only for everyone
+    match /public/{allPaths=**} {
+      allow read: if true;
+      allow write: if false;
+    }
+
+    // Deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}
