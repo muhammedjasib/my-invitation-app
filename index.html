@@ -3,202 +3,337 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Invitation Generator</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <meta name="description" content="AI Wedding Invitation Builder - Create beautiful premium wedding invitations in minutes">
+    <meta name="theme-color" content="#D4A574">
+    <title>AI Wedding Invitation Builder</title>
+    <link rel="icon" type="image/png" href="assets/images/icons/favicon.png">
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="assets/css/admin.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #D4A574 0%, #8B7355 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            padding: 40px;
+            text-align: center;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #D4A574 0%, #8B7355 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+        }
+
+        .login-card h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .login-card p {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #D4A574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+
+        .remember-forgot input[type="checkbox"] {
+            margin-right: 5px;
+        }
+
+        .remember-forgot a {
+            color: #D4A574;
+            text-decoration: none;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #D4A574 0%, #8B7355 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .signup-link a {
+            color: #D4A574;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #c33;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 14px;
+            border-left: 4px solid #3c3;
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .login-btn.loading .spinner {
+            display: block;
+        }
+
+        .login-btn.loading span {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <!-- Navigation Header -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">✨ InviteLux</div>
-            <ul class="nav-links">
-                <li><a href="#generator">Create</a></li>
-                <li><a href="#features">Features</a></li>
-                <li><a href="#templates">Templates</a></li>
-            </ul>
-        </div>
-    </nav>
+    <div class="container">
+        <div class="login-card">
+            <div class="logo">💍</div>
+            <h1>Wedding Invitation Builder</h1>
+            <p>Create beautiful premium wedding invitations with AI</p>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Create Beautiful Digital Invitations</h1>
-            <p>Craft elegant, personalized invitations that wow your guests in seconds</p>
-            <a href="#generator" class="cta-btn">Start Creating Now →</a>
-        </div>
-    </section>
+            <div class="error-message" id="errorMessage"></div>
+            <div class="success-message" id="successMessage"></div>
 
-    <!-- Main Generator Section -->
-    <section id="generator" class="generator-section">
-        <div class="generator-wrapper">
-            <h2>Design Your Invitation</h2>
-            
-            <!-- Step 1: Template Selection -->
-            <div class="form-section">
-                <h3 class="section-title">🎨 Choose a Template</h3>
-                <div class="template-grid">
-                    <div class="template-card active" data-template="elegant">
-                        <div class="template-preview">💍</div>
-                        <p>Elegant</p>
-                    </div>
-                    <div class="template-card" data-template="modern">
-                        <div class="template-preview">🎉</div>
-                        <p>Modern</p>
-                    </div>
-                    <div class="template-card" data-template="vintage">
-                        <div class="template-preview">🥂</div>
-                        <p>Vintage</p>
-                    </div>
-                    <div class="template-card" data-template="colorful">
-                        <div class="template-preview">🌈</div>
-                        <p>Colorful</p>
-                    </div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        placeholder="admin@wedding.app" 
+                        required
+                    >
                 </div>
-            </div>
 
-            <!-- Step 2: Event Category -->
-            <div class="form-section">
-                <h3 class="section-title">📋 Select Event Type</h3>
-                <div class="category-grid">
-                    <div class="category-card active" data-category="Wedding">💍 Wedding</div>
-                    <div class="category-card" data-category="Birthday">🎂 Birthday</div>
-                    <div class="category-card" data-category="Anniversary">🥂 Anniversary</div>
-                    <div class="category-card" data-category="Baby Shower">🍼 Baby Shower</div>
-                    <div class="category-card" data-category="House Warming">🏡 House Warming</div>
-                    <div class="category-card" data-category="Gala Party">🎉 Gala Party</div>
-                    <div class="category-card" data-category="Graduation">🎓 Graduation</div>
-                    <div class="category-card" data-category="Concert">🎵 Concert</div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        placeholder="Enter your password" 
+                        required
+                    >
                 </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" id="remember" name="remember">
+                        Remember me
+                    </label>
+                    <a href="#" id="forgotPassword">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span>Sign In</span>
+                    <div class="spinner"></div>
+                </button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="#" id="signupLink">Create one</a>
             </div>
+        </div>
+    </div>
 
-            <!-- Step 3: Event Details Form -->
-            <div class="form-section">
-                <h3 class="section-title">📝 Enter Event Details</h3>
-                <form id="invite-form">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="event-title">Event Title / Hosts</label>
-                            <input type="text" id="event-title" placeholder="e.g., Sarah & Michael" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-date">Date & Time</label>
-                            <input type="text" id="event-date" placeholder="e.g., Saturday, July 15, 2025 at 6:00 PM" required>
-                        </div>
-                    </div>
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-storage.js"></script>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="event-venue">Venue Address</label>
-                            <input type="text" id="event-venue" placeholder="e.g., The Grand Ballroom, New York, NY" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="event-color">Color Theme</label>
-                            <select id="event-color">
-                                <option value="gold">Gold & Cream</option>
-                                <option value="blue">Navy Blue</option>
-                                <option value="rose">Rose Gold</option>
-                                <option value="emerald">Emerald Green</option>
-                                <option value="purple">Purple Elegance</option>
-                            </select>
-                        </div>
-                    </div>
+    <!-- Config -->
+    <script src="config/firebase-config.js"></script>
 
-                    <div class="form-group full-width">
-                        <label for="event-message">Personal Message</label>
-                        <textarea id="event-message" rows="4" placeholder="Share a special message with your guests..."></textarea>
-                    </div>
+    <!-- App Scripts -->
+    <script src="assets/firebase/config.js"></script>
+    <script src="assets/firebase/auth.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('loginForm');
+            const loginBtn = document.getElementById('loginBtn');
+            const errorMessage = document.getElementById('errorMessage');
+            const successMessage = document.getElementById('successMessage');
+            const forgotPassword = document.getElementById('forgotPassword');
+            const signupLink = document.getElementById('signupLink');
 
-                    <!-- Music Upload Section -->
-                    <div class="form-group full-width">
-                        <label for="event-music">🎵 Upload Background Music (Optional)</label>
-                        <div class="music-upload-container">
-                            <input type="file" id="event-music" accept="audio/*" class="music-input">
-                            <label for="event-music" class="music-upload-label">
-                                <span class="upload-icon">🎶</span>
-                                <span class="upload-text">Click to Choose Music File</span>
-                                <span class="upload-hint">(MP3, WAV, M4A, OGG)</span>
-                            </label>
-                            <div id="music-file-name" class="music-file-name hidden"></div>
-                        </div>
-                        <small style="color: #666; margin-top: 0.5rem; display: block;">💡 Tip: Music will play when guests open your invitation</small>
-                    </div>
+            // Check if user is already logged in
+            if (localStorage.getItem('userToken')) {
+                window.location.href = 'admin/dashboard.html';
+            }
 
-                    <button type="submit" class="primary-btn">Generate Invitation Link 🚀</button>
-                </form>
-            </div>
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
 
-            <!-- Step 4: Result Box -->
-            <div id="result-box" class="result-section hidden">
-                <div class="result-content">
-                    <h3>🎉 Your Invitation is Ready!</h3>
-                    <p>Share this link with your guests:</p>
+                const email = document.getElementById('email').value.trim();
+                const password = document.getElementById('password').value;
+                const remember = document.getElementById('remember').checked;
+
+                errorMessage.style.display = 'none';
+                successMessage.style.display = 'none';
+                loginBtn.disabled = true;
+                loginBtn.classList.add('loading');
+
+                try {
+                    const user = await signInWithEmail(email, password);
                     
-                    <div class="copy-container">
-                        <input type="text" id="generated-url" readonly>
-                        <button type="button" id="copy-btn" class="copy-btn">📋 Copy Link</button>
-                    </div>
+                    if (remember) {
+                        localStorage.setItem('rememberMe', 'true');
+                        localStorage.setItem('rememberEmail', email);
+                    }
 
-                    <div class="action-buttons">
-                        <a id="preview-btn" href="#" target="_blank" class="preview-btn">👁️ Preview Invitation</a>
-                        <button type="button" id="new-invite-btn" class="new-btn">+ Create Another</button>
-                    </div>
+                    successMessage.textContent = 'Login successful! Redirecting...';
+                    successMessage.style.display = 'block';
 
-                    <div class="share-section">
-                        <p>Share directly:</p>
-                        <div class="share-buttons">
-                            <button type="button" class="share-btn whatsapp-btn">📱 WhatsApp</button>
-                            <button type="button" class="share-btn email-btn">✉️ Email</button>
-                            <button type="button" class="share-btn sms-btn">💬 SMS</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+                    setTimeout(() => {
+                        window.location.href = 'admin/dashboard.html';
+                    }, 1500);
+                } catch (error) {
+                    errorMessage.textContent = error.message || 'Login failed. Please try again.';
+                    errorMessage.style.display = 'block';
+                    loginBtn.disabled = false;
+                    loginBtn.classList.remove('loading');
+                }
+            });
 
-    <!-- Features Section -->
-    <section id="features" class="features-section">
-        <h2>Why Choose InviteLux?</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h4>Lightning Fast</h4>
-                <p>Create beautiful invitations in seconds, not hours</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎨</div>
-                <h4>Fully Customizable</h4>
-                <p>Choose colors, templates, and personalize every detail</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📱</div>
-                <h4>Mobile Friendly</h4>
-                <p>Perfect display on any device - phones, tablets, desktops</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h4>Easy Sharing</h4>
-                <p>One link to share via WhatsApp, Email, or SMS</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">💎</div>
-                <h4>Professional Design</h4>
-                <p>Premium templates that impress your guests</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🎵</div>
-                <h4>Music Support</h4>
-                <p>Add background music from your device to invitations</p>
-            </div>
-        </div>
-    </section>
+            forgotPassword.addEventListener('click', (e) => {
+                e.preventDefault();
+                // TODO: Implement password reset
+                alert('Password reset functionality coming soon!');
+            });
 
-    <!-- Footer -->
-    <footer class="footer">
-        <p>&copy; 2025 InviteLux. Create unforgettable invitations.</p>
-    </footer>
+            signupLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                // TODO: Implement signup
+                alert('Signup functionality coming soon!');
+            });
 
-    <script src="script.js"></script>
+            // Pre-fill email if "remember me" was checked
+            if (localStorage.getItem('rememberMe') === 'true') {
+                const rememberEmail = localStorage.getItem('rememberEmail');
+                if (rememberEmail) {
+                    document.getElementById('email').value = rememberEmail;
+                    document.getElementById('remember').checked = true;
+                }
+            }
+        });
+    </script>
 </body>
 </html>

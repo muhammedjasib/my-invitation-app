@@ -1,0 +1,36 @@
+{
+  "name": "my-invitation-app",
+  "version": "1.0.0",
+  "description": "AI Wedding Invitation Builder - Complete Production-Ready Application",
+  "main": "index.js",
+  "scripts": {
+    "start": "firebase serve",
+    "build": "npm run build:css && npm run build:js",
+    "build:css": "echo 'CSS build process'",
+    "build:js": "echo 'JS build process'",
+    "deploy": "firebase deploy",
+    "deploy:hosting": "firebase deploy --only hosting",
+    "deploy:functions": "firebase deploy --only functions",
+    "deploy:firestore": "firebase deploy --only firestore:rules",
+    "deploy:storage": "firebase deploy --only storage",
+    "dev": "firebase serve --only hosting"
+  },
+  "keywords": [
+    "wedding",
+    "invitation",
+    "ai",
+    "firebase",
+    "pwa"
+  ],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "firebase": "^10.7.0",
+    "aos": "^3.0.0",
+    "gsap": "^3.12.2",
+    "qrcode.js": "^1.20.0"
+  },
+  "devDependencies": {
+    "firebase-tools": "^13.0.0"
+  }
+}

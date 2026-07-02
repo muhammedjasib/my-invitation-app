@@ -1,154 +1,313 @@
-# 🎉 InviteLux - Premium Invitation Generator
+# AI Wedding Invitation Builder
 
-Create beautiful, personalized digital invitations in seconds! Share elegant invitation cards with your guests via a unique link.
+A complete production-ready AI-powered Wedding Invitation Builder web application with a premium admin dashboard.
 
-## ✨ Features
+## Features
 
-- **Multiple Templates**: Choose from Elegant, Modern, Vintage, and Colorful designs
-- **Event Categories**: Support for Weddings, Birthdays, Anniversaries, Baby Showers, House Warmings, Galas, Graduations, and Concerts
-- **Color Themes**: Gold & Cream, Navy Blue, Rose Gold, Emerald Green, Purple Elegance
-- **Easy Sharing**: Share via WhatsApp, Email, or SMS with one click
-- **Mobile Responsive**: Perfect display on all devices
-- **RSVP Ready**: Built-in confirmation button for guest responses
-- **Fast & Simple**: Create invitations in minutes, not hours
+✨ **Core Features**
+- 🔐 Secure Admin Authentication
+- 📊 Premium Admin Dashboard
+- 🎨 AI-Powered Invitation Creation
+- 🔗 Unique Share Links & QR Codes
+- 💍 Luxury Premium Invitation Websites
+- 📱 Fully Responsive Design
+- 🎬 Rich Animations (AOS, GSAP)
+- 📸 Advanced Gallery with Lightbox
+- 🗺️ Google Maps Integration
+- 💬 RSVP Management
+- 🎁 Guest Wishes Wall
+- 📈 Real-time Analytics
+- 🤖 AI Features (Quote, Story, SEO Generation)
+- 🎨 Multiple Premium Themes
+- ⚡ PWA & Offline Support
 
-## 🚀 Getting Started
+## Tech Stack
 
-### For Users
-1. Visit the website
-2. Select a template and event category
-3. Fill in your event details (title, date, venue, message)
-4. Choose your color theme
-5. Click "Generate Invitation Link"
-6. Share the link with your guests!
+### Frontend
+- HTML5
+- CSS3
+- Vanilla JavaScript (ES6+)
+- AOS (Animate On Scroll)
+- GSAP (GreenSock Animation Platform)
+- QRCode.js
 
-### For Developers
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/muhammedjasib/my-invitation-app.git
-   cd my-invitation-app
-   ```
+### Backend
+- Firebase Authentication
+- Cloud Firestore
+- Firebase Storage
+- Firebase Hosting
 
-2. Open `index.html` in your browser or deploy to GitHub Pages
+### APIs
+- OpenAI API (for AI features)
+- Google Maps API
+- Google Analytics
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 my-invitation-app/
-├── index.html          # Main invitation generator page
-├── invitation.html     # Shareable invitation card page
-├── style.css          # All styling for both pages
-├── script.js          # JavaScript for generator functionality
-└── README.md          # This file
+├── admin/
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── create-invitation.html
+│   ├── invitations.html
+│   ├── rsvp.html
+│   ├── wishes.html
+│   └── settings.html
+├── invitation/
+│   ├── index.html
+│   └── [code].html (dynamic)
+├── assets/
+│   ├── css/
+│   │   ├── admin.css
+│   │   ├── invitation.css
+│   │   ├── themes.css
+│   │   └── responsive.css
+│   ├── js/
+│   │   ├── main.js
+│   │   ├── admin.js
+│   │   ├── invitation.js
+│   │   ├── ai-service.js
+│   │   ├── storage.js
+│   │   └── analytics.js
+│   ├── components/
+│   │   ├── navbar.js
+│   │   ├── sidebar.js
+│   │   ├── footer.js
+│   │   └── forms.js
+│   ├── firebase/
+│   │   ├── config.js
+│   │   ├── auth.js
+│   │   ├── firestore.js
+│   │   └── storage.js
+│   ├── images/
+│   │   ├── logos/
+│   │   ├── themes/
+│   │   └── icons/
+├── public/
+│   ├── manifest.json
+│   ├── service-worker.js
+│   └── robots.txt
+├── config/
+│   ├── firebase-config.example.js
+│   ├── firestore-rules.txt
+│   └── storage-rules.txt
+├── docs/
+│   ├── DEPLOYMENT.md
+│   ├── FIREBASE-SETUP.md
+│   ├── API-SETUP.md
+│   └── USER-GUIDE.md
+├── index.html
+├── package.json
+└── firebase.json
 ```
 
-## 🎨 How It Works
+## Installation
 
-### 1. Generator Page (index.html)
-- Users fill out event details in a form
-- Select template, category, and color theme
-- JavaScript generates a URL with parameters
-
-### 2. Invitation Page (invitation.html)
-- Extracts URL parameters dynamically
-- Displays an elegant sealed envelope
-- Guest taps to open and see full invitation
-- background music support
-- Customizable RSVP button
-
-### 3. Sharing
-- Share link via WhatsApp, Email, or SMS
-- Recipients see a beautiful invitation card
-- Mobile-optimized experience
-
-## 🛠️ Technical Stack
-
-- **HTML5**: Semantic markup
-- **CSS3**: Modern styling with gradients and animations
-- **Vanilla JavaScript**: No dependencies needed
-- **Google Fonts**: Poppins & Playfair Display fonts
-- **GitHub Pages**: Free hosting
-
-## 💡 Customization
-
-### Add a New Template
-Edit the template selection in `index.html` and add corresponding styles in `style.css`.
-
-### Add a New Color Theme
-In `invitation.html`, add a new color scheme to the `themes` object:
-```javascript
-const themes = {
-    yourColor: { primary: "#XXXXXX", accent: "#XXXXXX" }
-};
+### 1. Clone Repository
+```bash
+git clone https://github.com/muhammedjasib/my-invitation-app.git
+cd my-invitation-app
 ```
 
-### Add a New Event Category
-Edit the category grid in `index.html`:
-```html
-<div class="category-card" data-category="Your Event">🎯 Your Event</div>
+### 2. Install Dependencies
+```bash
+npm install
 ```
 
-## 📱 Responsive Design
+### 3. Setup Firebase
 
-- **Desktop**: Full-width experience with optimal spacing
-- **Tablet**: Responsive grid layouts
-- **Mobile**: Touch-friendly buttons and readable text
+1. Create a Firebase project at https://console.firebase.google.com
+2. Copy your Firebase config
+3. Create `config/firebase-config.js` from the example
+4. Enable Authentication (Email/Password)
+5. Create Firestore database
+6. Setup Storage buckets
+7. Deploy Firestore and Storage rules
 
-## 🔒 Privacy
+See [FIREBASE-SETUP.md](docs/FIREBASE-SETUP.md) for detailed instructions.
 
-- No data is stored on any server
-- All information stays in the URL (be mindful of sensitive details)
-- No tracking or analytics
+### 4. Setup OpenAI API
 
-## 🚀 Deployment
+1. Get API key from https://platform.openai.com/api-keys
+2. Add to environment variables in Firebase
 
-### GitHub Pages
-1. Push to your GitHub repository
-2. Go to Settings → Pages
-3. Select "Deploy from a branch"
-4. Choose `main` branch
-5. Your site will be live at: `https://yourusername.github.io/my-invitation-app`
+See [API-SETUP.md](docs/API-SETUP.md) for detailed instructions.
 
-### Other Platforms
-Works with any static hosting (Netlify, Vercel, etc.)
+### 5. Run Locally
+```bash
+firebase serve
+```
 
-## 🐛 Troubleshooting
+## Deployment
 
-### Background music not playing?
-- Ensure the music file URL is correct
-- Some browsers require user interaction before playing audio
-- File size shouldn't exceed browser limits
+### Firebase Hosting
+```bash
+firebase deploy
+```
 
-### Special characters not displaying?
-- The app uses URL encoding/decoding
-- Most special characters are supported
+See [DEPLOYMENT.md](docs/DEPLOYMENT.md) for complete deployment guide.
 
-### Link too long?
-- Very long messages may create very long URLs
-- Keep messages concise for better sharing
+## Database Schema
 
-## 📝 Future Enhancements
+### Collections
 
-- [ ] Guest RSVP tracking with backend
-- [ ] PDF download option
-- [ ] Email invitation delivery
-- [ ] More template designs
-- [ ] Guest list management
-- [ ] Multiple language support
-- [ ] Custom branding options
+**users**
+```
+- uid (string)
+- email (string)
+- displayName (string)
+- createdAt (timestamp)
+- subscription (string)
+```
 
-## 📄 License
+**invitations**
+```
+- id (string - auto-generated)
+- code (string - 10 char unique code)
+- userId (string)
+- clientName (string)
+- brideName (string)
+- groomName (string)
+- weddingDate (timestamp)
+- venue (object)
+- theme (object)
+- status (string)
+- viewCount (number)
+- uniqueVisitors (number)
+- rsvpCount (number)
+- wishesCount (number)
+- createdAt (timestamp)
+- updatedAt (timestamp)
+```
 
-This project is open source and available under the MIT License.
+**rsvp**
+```
+- id (string)
+- invitationId (string)
+- name (string)
+- phone (string)
+- guestCount (number)
+- attending (boolean)
+- mealPreference (string)
+- message (string)
+- createdAt (timestamp)
+```
 
-## 👨‍💻 Author
+**wishes**
+```
+- id (string)
+- invitationId (string)
+- name (string)
+- message (string)
+- approved (boolean)
+- createdAt (timestamp)
+```
 
-Created by **Muhammed Jasib**
+**analytics**
+```
+- id (string)
+- invitationId (string)
+- event (string)
+- device (string)
+- country (string)
+- timestamp (timestamp)
+```
 
-## 💬 Support
+## Environment Variables
 
-For issues, suggestions, or feature requests, please open an issue on GitHub.
+Create `.env.local`:
+
+```
+VITE_FIREBASE_API_KEY=your_key
+VITE_FIREBASE_AUTH_DOMAIN=your_domain
+VITE_FIREBASE_PROJECT_ID=your_project
+VITE_FIREBASE_STORAGE_BUCKET=your_bucket
+VITE_FIREBASE_MESSAGING_SENDER_ID=your_sender_id
+VITE_FIREBASE_APP_ID=your_app_id
+VITE_OPENAI_API_KEY=your_openai_key
+VITE_GOOGLE_MAPS_API_KEY=your_maps_key
+VITE_GOOGLE_ANALYTICS_ID=your_analytics_id
+```
+
+## Admin Credentials
+
+Default admin credentials (change after first login):
+- Email: admin@wedding.app
+- Password: Wedding@Admin123
+
+## Features Detail
+
+### Admin Dashboard
+- 📊 Real-time statistics cards
+- 📈 RSVP and invitations charts
+- 🎯 Quick action buttons
+- 📋 Invitation management table
+- 🔍 Search and filter
+
+### Invitation Creation
+- AI-powered form assistance
+- Rich media uploads
+- Theme selection
+- SEO optimization
+- Preview before publishing
+
+### Guest Experience
+- Luxury premium design
+- Wedding countdown timer
+- Photo gallery with lightbox
+- RSVP form
+- Guest wishes wall
+- Location map
+- Background music
+- Animated elements
+
+### AI Features
+- Quote generation
+- Love story creation
+- SEO optimization
+- Color palette suggestion
+- Event schedule generation
+- Welcome message creation
+
+## Security
+
+- Firebase Authentication
+- Firestore Security Rules
+- Input validation
+- Rate limiting
+- XSS protection
+- CSRF protection
+- Secure API endpoints
+
+## Performance
+
+- Lazy loading
+- Image compression
+- Service Worker
+- PWA support
+- Caching strategies
+- Minified assets
+
+## Browser Support
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers
+
+## License
+
+MIT License - See LICENSE file
+
+## Support
+
+For issues and feature requests, visit: https://github.com/muhammedjasib/my-invitation-app/issues
+
+## Contributing
+
+Contributions are welcome! Please read our contributing guidelines.
 
 ---
 
-**Happy Inviting! 🎊**
+**Made with ❤️ for beautiful weddings**
