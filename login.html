@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Wedding Invitation Builder - Create beautiful premium wedding invitations with AI">
+    <title>Wedding Invitation Builder - Create Your Perfect Invitation</title>
+    <link rel="manifest" href="public/manifest.json">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            padding: 50px 40px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #D4A574 0%, #8B7355 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            box-shadow: 0 5px 20px rgba(212, 165, 116, 0.3);
+        }
+
+        .logo-section h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+            font-weight: 700;
+        }
+
+        .logo-section p {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e8e8e8;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #D4A574;
+            box-shadow: 0 0 0 3px rgba(212, 165, 116, 0.1);
+        }
+
+        .remember-forgot {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            font-size: 13px;
+        }
+
+        .remember-forgot label {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            cursor: pointer;
+            color: #666;
+            font-weight: 500;
+        }
+
+        .remember-forgot input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            margin-right: 6px;
+            cursor: pointer;
+            accent-color: #D4A574;
+        }
+
+        .remember-forgot a {
+            color: #D4A574;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .remember-forgot a:hover {
+            text-decoration: underline;
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 13px;
+            background: linear-gradient(135deg, #D4A574 0%, #8B7355 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.35);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .login-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .error-message {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+            display: block;
+        }
+
+        .success-message {
+            background: #efe;
+            color: #3c3;
+            border: 1px solid #cfc;
+            display: block;
+        }
+
+        .info-message {
+            background: #eef;
+            color: #33c;
+            border: 1px solid #ccf;
+            display: block;
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #D4A574;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .signup-link a:hover {
+            text-decoration: underline;
+        }
+
+        .spinner {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top: 2px solid white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .demo-info {
+            background: #f0f8ff;
+            border: 1px solid #add8e6;
+            border-radius: 8px;
+            padding: 12px 15px;
+            margin-bottom: 20px;
+            font-size: 13px;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .demo-info strong {
+            color: #0066cc;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        @media (max-width: 480px) {
+            .login-card {
+                padding: 30px 20px;
+            }
+
+            .logo-section h1 {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-card">
+            <div class="logo-section">
+                <div class="logo">💍</div>
+                <h1>WedInvite</h1>
+                <p>Create Beautiful Wedding Invitations with AI</p>
+            </div>
+
+            <div class="demo-info">
+                <strong>📝 Demo Credentials:</strong>
+                Email: admin@wedding.app<br>
+                Password: Wedding@Admin123
+            </div>
+
+            <div id="errorMessage" class="message error-message"></div>
+            <div id="successMessage" class="message success-message"></div>
+            <div id="infoMessage" class="message info-message"></div>
+
+            <form id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input 
+                        type="email" 
+                        id="email" 
+                        name="email"
+                        placeholder="Enter your email" 
+                        required
+                        autocomplete="email"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input 
+                        type="password" 
+                        id="password" 
+                        name="password"
+                        placeholder="Enter your password" 
+                        required
+                        autocomplete="current-password"
+                    >
+                </div>
+
+                <div class="remember-forgot">
+                    <label>
+                        <input type="checkbox" id="remember" name="remember">
+                        Remember me
+                    </label>
+                    <a href="#" onclick="handleForgotPassword(event)">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-btn" id="loginBtn">
+                    <span id="btnText">Sign In</span>
+                </button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="#" onclick="handleSignup(event)">Contact us to register</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js"></script>
+
+    <script src="config/firebase-config.js"></script>
+    <script src="assets/firebase/config.js"></script>
+    <script src="assets/firebase/auth.js"></script>
+    <script src="assets/js/utils.js"></script>
+
+    <script>
+        // Check if already logged in
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check Firebase auth state
+            firebase.auth().onAuthStateChanged((user) => {
+                if (user) {
+                    window.location.href = 'admin/dashboard.html';
+                }
+            });
+
+            // Pre-fill email if "remember me" was checked
+            if (localStorage.getItem('rememberMe') === 'true') {
+                const rememberEmail = localStorage.getItem('rememberEmail');
+                if (rememberEmail) {
+                    document.getElementById('email').value = rememberEmail;
+                    document.getElementById('remember').checked = true;
+                }
+            }
+        });
+
+        function showMessage(message, type = 'info') {
+            const errorEl = document.getElementById('errorMessage');
+            const successEl = document.getElementById('successMessage');
+            const infoEl = document.getElementById('infoMessage');
+
+            errorEl.style.display = 'none';
+            successEl.style.display = 'none';
+            infoEl.style.display = 'none';
+
+            if (type === 'error') {
+                errorEl.textContent = message;
+                errorEl.style.display = 'block';
+            } else if (type === 'success') {
+                successEl.textContent = message;
+                successEl.style.display = 'block';
+            } else if (type === 'info') {
+                infoEl.textContent = message;
+                infoEl.style.display = 'block';
+            }
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const remember = document.getElementById('remember').checked;
+            const loginBtn = document.getElementById('loginBtn');
+            const btnText = document.getElementById('btnText');
+
+            if (!email || !password) {
+                showMessage('Please enter email and password', 'error');
+                return;
+            }
+
+            loginBtn.disabled = true;
+            btnText.innerHTML = '<span class="spinner"></span>Signing in...';
+
+            try {
+                const userCredential = await firebase.auth().signInWithEmailAndPassword(email, password);
+                const user = userCredential.user;
+
+                // Store auth info
+                localStorage.setItem('userId', user.uid);
+                localStorage.setItem('userEmail', user.email);
+
+                if (remember) {
+                    localStorage.setItem('rememberMe', 'true');
+                    localStorage.setItem('rememberEmail', email);
+                } else {
+                    localStorage.removeItem('rememberMe');
+                    localStorage.removeItem('rememberEmail');
+                }
+
+                showMessage('✓ Login successful! Redirecting...', 'success');
+
+                setTimeout(() => {
+                    window.location.href = 'admin/dashboard.html';
+                }, 1000);
+
+            } catch (error) {
+                let errorMessage = 'Login failed';
+                
+                if (error.code === 'auth/invalid-email') {
+                    errorMessage = 'Invalid email address';
+                } else if (error.code === 'auth/user-not-found') {
+                    errorMessage = 'Email not found';
+                } else if (error.code === 'auth/wrong-password') {
+                    errorMessage = 'Incorrect password';
+                } else if (error.code === 'auth/user-disabled') {
+                    errorMessage = 'Account has been disabled';
+                } else if (error.code === 'auth/too-many-requests') {
+                    errorMessage = 'Too many login attempts. Please try later';
+                }
+
+                showMessage(errorMessage, 'error');
+                loginBtn.disabled = false;
+                btnText.textContent = 'Sign In';
+            }
+        }
+
+        function handleForgotPassword(event) {
+            event.preventDefault();
+            showMessage('Password reset functionality coming soon!', 'info');
+        }
+
+        function handleSignup(event) {
+            event.preventDefault();
+            showMessage('Please contact support@wedding-app.com to register', 'info');
+        }
+    </script>
+</body>
+</html>

@@ -1,5 +1,3 @@
-# Environment variables
-.env
 .env.local
 .env.*.local
 
@@ -7,27 +5,86 @@
 node_modules/
 npm-debug.log
 yarn-error.log
+pnpm-debug.log
 
-# Build
+# Build output
 dist/
 build/
 .next/
+.nuxt/
+out/
+.cache/
+.vuepress/dist/
+.serverless/
+.fusebox/
+.dynamodb/
+.tern-port
 
 # IDE
 .vscode/
 .idea/
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 *.swp
 *.swo
 *~
-.DS_Store
+.vim/
 
 # Firebase
 .firebase/
 .firebaserc
+firebase-debug.log
+.firebase.log
+
+# OS
+Thumbs.db
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+desktop.ini
 
 # Logs
 logs/
 *.log
 
-# OS
-Thumbs.db
+# Temporary files
+*.tmp
+*.bak
+*.backup
+.temp/
+tmp/
+
+# Environment
+.env
+.env.production
+.env.staging
+.env.test
+
+# Private keys
+*.pem
+*.key
+*.keystore
+.rsa
+
+# Database backups
+*.sql
+*.dump
+
+# Testing
+coverage/
+.nyc_output/
+
+# Misc
+.DS_Store
+*.pem
+.vscode-test
+.vscode
+.history
